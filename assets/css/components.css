@@ -1,0 +1,434 @@
+/* =========================================================================
+   Components — reusable clay surfaces, controls and decorative objects
+   ========================================================================= */
+
+/* ---------- clay surfaces ---------- */
+.panel {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--elev-raised);
+  transition:
+    transform var(--motion-base) var(--ease-standard),
+    translate var(--motion-base) var(--ease-standard),
+    box-shadow var(--motion-base) var(--ease-standard),
+    background-color var(--motion-base) var(--ease-standard);
+}
+
+.panel.warm {
+  background: var(--surface-warm);
+}
+
+/* Lift uses the independent `translate` property so it still works on
+   cards whose `transform` is held by a (scroll-)reveal animation. */
+.panel.lift:hover {
+  translate: 0 -.25rem;
+  box-shadow: var(--elev-lift);
+}
+
+.inset {
+  background: var(--surface-in);
+  box-shadow: var(--elev-inset);
+}
+
+.pill {
+  border-radius: var(--radius-pill);
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-height: 3rem;
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-pill);
+  font: 600 var(--text-sm)/1 var(--font-body);
+  letter-spacing: .02em;
+  box-shadow: var(--elev-btn);
+  transition:
+    transform var(--motion-fast) var(--ease-standard),
+    box-shadow var(--motion-fast) var(--ease-standard),
+    background-color var(--motion-base) var(--ease-standard);
+}
+
+.btn:hover {
+  transform: translateY(-.125rem);
+}
+
+.btn:active {
+  transform: scale(.98);
+  box-shadow: var(--elev-inset);
+}
+
+.btn-primary {
+  padding-right: var(--space-2);
+  background: var(--accent);
+  color: var(--accent-on);
+  box-shadow:
+    .375rem .5rem 1.125rem color-mix(in oklab, var(--accent), transparent 68%),
+    inset 0 .125rem .1875rem color-mix(in oklab, #fff, transparent 60%),
+    inset 0 -.25rem .5rem color-mix(in oklab, #000, transparent 82%);
+}
+
+.btn-primary:active {
+  box-shadow: inset 0 .1875rem .5rem color-mix(in oklab, #000, transparent 70%);
+}
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--fg);
+}
+
+.btn-ic {
+  width: 3rem;
+  padding: 0;
+}
+
+/* Circular "nest" that holds the arrow inside primary buttons */
+.btn .nest {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.125rem;
+  height: 2.125rem;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--accent-on), transparent 82%);
+  transition: transform var(--motion-base) var(--ease-standard);
+}
+
+.btn:hover .nest {
+  transform: translate(.1875rem, -.0625rem) scale(1.05);
+}
+
+/* ---------- navigation link ---------- */
+.navlink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  letter-spacing: .02em;
+  color: var(--muted);
+  transition:
+    color var(--motion-fast) var(--ease-standard),
+    background-color var(--motion-fast) var(--ease-standard),
+    box-shadow var(--motion-fast) var(--ease-standard);
+}
+
+.navlink:hover {
+  color: var(--fg);
+  background: var(--surface);
+  box-shadow: var(--elev-btn);
+}
+
+/* ---------- chips ---------- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: var(--fg);
+  background: var(--surface-in);
+  box-shadow: var(--elev-inset);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* ---------- bullet list (clay dots) ---------- */
+.bullets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  color: var(--fg-2);
+}
+
+.bullets--tight {
+  gap: var(--space-3);
+}
+
+.bullets li {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.bullets li::before {
+  content: "";
+  flex: none;
+  width: .5rem;
+  height: .5rem;
+  margin-top: .5625rem;
+  border-radius: 50%;
+  background: var(--muted);
+}
+
+/* ---------- icon box ---------- */
+.icbox {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: var(--radius-md);
+  background: var(--surface-warm);
+  color: var(--fg);
+  box-shadow: var(--elev-btn);
+  transition: transform var(--motion-base) var(--ease-standard);
+}
+
+.icbox--sm {
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radius-sm);
+}
+
+.panel:hover .icbox {
+  transform: scale(1.08);
+}
+
+/* ---------- live status ---------- */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font: 700 var(--text-xs)/1 var(--font-mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--fg-2);
+}
+
+.status .live {
+  position: relative;
+  width: .5rem;
+  height: .5rem;
+  border-radius: 50%;
+  background: var(--success);
+}
+
+.status .live::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--success);
+  animation: ring 2.4s var(--ease-standard) infinite;
+}
+
+/* ---------- image placeholder ---------- */
+.ph-img {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  text-align: center;
+  color: var(--muted);
+  background: var(--surface-in);
+  box-shadow: var(--elev-inset);
+  font: 700 var(--text-xs)/1.4 var(--font-mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.ph-img__note {
+  opacity: .8;
+}
+
+/* A real <img> that replaces a .ph-img placeholder and keeps the placeholder's
+   box: width/height attributes are still welcome (they prevent layout shift). */
+.media-cover {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  object-fit: cover;
+}
+
+/* ---------- text highlight ---------- */
+.hl {
+  padding: 0 .25rem;
+  border-radius: .375rem;
+  background: linear-gradient(var(--surface-warm), var(--surface-warm)) no-repeat 0 92% / 100% 36%;
+}
+
+/* ---------- metric ---------- */
+.metric strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.5rem, 4.4vw, var(--text-3xl));
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+}
+
+/* ---------- orb: the floating clay object ---------- */
+.orb {
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 26%, var(--orb-hi), var(--orb-mid) 55%, var(--orb-lo));
+  box-shadow:
+    .75rem 1.125rem 1.875rem var(--sh-d),
+    inset -.875rem -.875rem 1.5rem var(--orb-sh),
+    inset .625rem .625rem 1.375rem var(--orb-hi2);
+  animation: float 8s ease-in-out infinite;
+}
+
+/* ---------- neural core: clay network, no rotation ---------- */
+/* Drawn on a 200px (12.5rem) grid; the SVG lines scale with it. */
+.net {
+  position: relative;
+  flex: none;
+  width: 12.5rem;
+  height: 12.5rem;
+}
+
+.net svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.net__lines {
+  stroke: var(--muted);
+  opacity: .32;
+}
+
+.net__rim {
+  opacity: .7;
+}
+
+.core {
+  position: absolute;
+  left: 3.25rem;
+  top: 3.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  font: 600 var(--text-xl)/1 var(--font-display);
+  color: var(--fg);
+  background: radial-gradient(circle at 32% 26%, var(--orb-hi), var(--orb-mid) 55%, var(--orb-lo));
+  box-shadow:
+    .625rem .875rem 1.625rem var(--sh-d),
+    inset -.625rem -.625rem 1.125rem var(--orb-sh),
+    inset .5rem .5rem 1rem var(--orb-hi2);
+  animation: breathe 3.6s var(--ease-standard) infinite;
+}
+
+.ring {
+  position: absolute;
+  left: 3.25rem;
+  top: 3.25rem;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  box-shadow: inset .25rem .25rem .625rem var(--in-d), inset -.25rem -.25rem .625rem var(--in-l);
+  opacity: 0;
+  animation: sonar 3.6s linear infinite;
+}
+
+.node {
+  position: absolute;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 26%, var(--orb-hi), var(--orb-mid) 60%, var(--orb-lo));
+  box-shadow:
+    .3125rem .4375rem .75rem var(--sh-d),
+    inset -.3125rem -.3125rem .5625rem var(--orb-sh),
+    inset .25rem .25rem .5rem var(--orb-hi2);
+  animation: fire 3.6s var(--ease-standard) infinite;
+}
+
+/* Six outer nodes on the hexagon, named by compass direction */
+.node--e  { left: 10.375rem; top: 5.375rem; }   /* 166, 86 */
+.node--se { left: 7.875rem;  top: 9.6875rem; }  /* 126, 155 */
+.node--sw { left: 2.875rem;  top: 9.6875rem; }  /* 46, 155 */
+.node--w  { left: .375rem;   top: 5.375rem; }   /* 6, 86 */
+.node--nw { left: 2.875rem;  top: 1.0625rem; }  /* 46, 17 */
+.node--ne { left: 7.875rem;  top: 1.0625rem; }  /* 126, 17 */
+
+/* ---------- skills marquee ---------- */
+.marquee {
+  overflow: hidden;
+  padding: var(--space-6) 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+/* The track holds `--marquee-sets` identical copies of the items (set by
+   js/modules/marquee.js, enough to cover any screen width). */
+.track {
+  --marquee-sets: 2;
+  display: flex;
+  gap: var(--space-6);
+  width: max-content;
+  animation: marq 40s linear infinite;
+}
+
+.mitem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 3.25rem;
+  padding: 0 var(--space-6);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+
+.mitem:hover {
+  transform: scale(1.1);
+  box-shadow: var(--elev-lift);
+}
+
+/* ---------- pipeline step (lights up in sequence) ---------- */
+.step {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  border-radius: var(--radius-md);
+}
+
+.step > * {
+  position: relative;
+  z-index: 1;
+}
+
+.step::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--surface-warm);
+  opacity: 0;
+  animation: lit 10s var(--ease-standard) infinite;
+  animation-delay: var(--d, 0s);
+}
+
+.step .num {
+  font: 700 var(--text-xs)/1 var(--font-mono);
+  letter-spacing: .12em;
+  color: var(--muted);
+}
+
+.step__title {
+  font: 600 var(--text-base)/1.3 var(--font-display);
+}

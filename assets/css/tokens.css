@@ -1,0 +1,141 @@
+/* =========================================================================
+   Design tokens — claymorphism palette
+   Light = cream / peach, Dark = warm brown.
+   The theme is switched with <html data-theme="light|dark">.
+
+   All sizes are in rem (1rem = 16px at the 1440px design width), so the
+   whole layout scales with the fluid root font size set in base.css.
+   ========================================================================= */
+
+:root {
+  color-scheme: light;
+
+  /* Typography */
+  --font-display: 'Fredoka', 'Nunito', system-ui, sans-serif;
+  --font-body: 'Nunito', system-ui, sans-serif;
+  --font-mono: 'Nunito', system-ui, sans-serif;
+
+  --text-xs: .75rem;     /* 12px */
+  --text-sm: .875rem;    /* 14px */
+  --text-base: 1rem;     /* 16px */
+  --text-lg: 1.125rem;   /* 18px */
+  --text-xl: 1.5rem;     /* 24px */
+  --text-2xl: 2.25rem;   /* 36px */
+  --text-3xl: 3.375rem;  /* 54px */
+
+  --leading-body: 1.52;
+  --leading-tight: 1.08;
+  --tracking-display: -0.01em;
+
+  /* Spacing & layout */
+  --space-1: .25rem;     /* 4px */
+  --space-2: .5rem;      /* 8px */
+  --space-3: .75rem;     /* 12px */
+  --space-4: 1rem;       /* 16px */
+  --space-6: 1.5rem;     /* 24px */
+  --space-8: 2rem;       /* 32px */
+  --space-12: 3rem;      /* 48px */
+
+  --section-y: 6rem;          /* 96px */
+  --gutter: 2.25rem;          /* 36px */
+  --container-max: 73.75rem;  /* 1180px */
+
+  /* Shape */
+  --radius-sm: .875rem;   /* 14px */
+  --radius-md: 1.375rem;  /* 22px */
+  --radius-lg: 2.125rem;  /* 34px */
+  --radius-pill: 9999px;
+
+  /* Motion */
+  --motion-fast: 150ms;
+  --motion-base: 240ms;
+  --ease-standard: cubic-bezier(.2, 0, 0, 1);
+
+  /* Colour — light theme */
+  --bg: #FFF8E7;
+  --surface: #FFEFD5;
+  --surface-warm: #FFE4B5;
+  --peach: #FFDAB9;
+  --surface-in: color-mix(in oklab, var(--surface-warm) 55%, var(--bg));
+
+  --fg: #3A2411;
+  --fg-2: #523826;
+  --muted: #6B4E36;
+
+  --accent: #A4521F;
+  --accent-on: #FFFFFF;
+  --meta: var(--accent);
+
+  --border: color-mix(in oklab, var(--surface-warm), var(--fg) 16%);
+  --border-soft: color-mix(in oklab, var(--surface-warm), var(--fg) 8%);
+  --success: #4D8F5A;
+
+  /* Clay lighting: drop shadow (d) and highlight (l), outer and inner */
+  --sh-d: rgba(150, 100, 60, .22);
+  --sh-l: rgba(255, 255, 255, .9);
+  --in-d: rgba(190, 130, 70, .16);
+  --in-l: rgba(255, 255, 255, .75);
+
+  /* Clay orbs */
+  --orb-hi: #FFF3E0;
+  --orb-mid: #FFDAB9;
+  --orb-lo: #F0AE7C;
+  --orb-sh: rgba(190, 110, 50, .32);
+  --orb-hi2: rgba(255, 255, 255, .8);
+
+  /* Elevation */
+  --elev-raised: .5rem .625rem 1.5rem var(--sh-d), -.5rem -.5rem 1.25rem var(--sh-l),
+    inset -.25rem -.3125rem .625rem var(--in-d), inset .25rem .25rem .625rem var(--in-l);
+  --elev-lift: .75rem 1rem 2rem var(--sh-d), -.5rem -.5rem 1.25rem var(--sh-l),
+    inset -.25rem -.3125rem .625rem var(--in-d), inset .25rem .25rem .625rem var(--in-l);
+  --elev-inset: inset .375rem .375rem .875rem var(--in-d), inset -.375rem -.375rem .875rem var(--in-l);
+  --elev-btn: .3125rem .375rem .875rem var(--sh-d), -.25rem -.25rem .625rem var(--sh-l),
+    inset -.1875rem -.1875rem .375rem var(--in-d), inset .1875rem .1875rem .375rem var(--in-l);
+}
+
+/* Colour — dark theme */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #2A2A2A;
+  --surface: #35322C;
+  --surface-warm: #534C40;
+  --peach: #7A6242;
+
+  --fg: #F0E6D8;
+  --fg-2: #E3D8C6;
+  --muted: #D2C5B0;
+
+  --accent: #E8BE88;
+  --accent-on: #2A2A2A;
+
+  --border: rgba(255, 240, 215, .12);
+  --border-soft: rgba(255, 240, 215, .07);
+  --success: #7DBF8A;
+
+  --sh-d: rgba(0, 0, 0, .46);
+  --sh-l: rgba(255, 240, 215, .04);
+  --in-d: rgba(0, 0, 0, .30);
+  --in-l: rgba(255, 240, 215, .06);
+
+  --orb-hi: #B08F6E;
+  --orb-mid: #8C6C58;
+  --orb-lo: #5A4538;
+  --orb-sh: rgba(0, 0, 0, .5);
+  --orb-hi2: rgba(255, 230, 200, .26);
+}
+
+/* Responsive rhythm (media queries stay in px: they describe the viewport) */
+@media (max-width: 1023px) {
+  :root {
+    --gutter: 1.5rem;      /* 24px */
+    --section-y: 4.25rem;  /* 68px */
+  }
+}
+
+@media (max-width: 639px) {
+  :root {
+    --gutter: 1rem;        /* 16px */
+    --section-y: 3rem;     /* 48px */
+  }
+}

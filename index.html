@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-motion="playing">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Syeda Mahjabin Proma Portfolio</title>
+  <meta name="description" content="Syeda Mahjabin Proma, Computer Science graduate from BRAC University working across machine learning, computer vision and data science.">
+  <meta name="author" content="Syeda Mahjabin Proma">
+  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap">
+
+  <!-- Styles (order matters: tokens → base → components → sections → motion) -->
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/sections.css">
+  <link rel="stylesheet" href="assets/css/motion.css">
+
+  <!-- Scripts: boot.js runs immediately (no theme flash); the deferred ones
+       run in this order once the page is parsed. Plain scripts, not ES modules,
+       so the site also works when index.html is opened straight from disk. -->
+  <script src="assets/js/boot.js"></script>
+  <script defer src="assets/js/modules/storage.js"></script>
+  <script defer src="assets/js/modules/preferences.js"></script>
+  <script defer src="assets/js/modules/marquee.js"></script>
+  <script defer src="assets/js/modules/counters.js"></script>
+  <script defer src="assets/js/modules/scroll-reveal.js"></script>
+  <script defer src="assets/js/main.js"></script>
+</head>
+<body>
+  <!-- Icon sprite: each icon is drawn once and referenced with <use href="#icon-…"> -->
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="icon-arrow-up-right" viewBox="0 0 24 24"><path d="M7 17L17 7M8 7h9v9"/></symbol>
+    <symbol id="icon-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+    <symbol id="icon-download" viewBox="0 0 24 24"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></symbol>
+    <symbol id="icon-map-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+    <symbol id="icon-chip" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></symbol>
+    <symbol id="icon-graduation-cap" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5"/></symbol>
+    <symbol id="icon-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M9 8h6M9 12h6"/></symbol>
+    <symbol id="icon-briefcase" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="3"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></symbol>
+    <symbol id="icon-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 8l9 6 9-6"/></symbol>
+    <symbol id="icon-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+    <symbol id="icon-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+    <symbol id="icon-code" viewBox="0 0 24 24"><path d="M8 8l-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/></symbol>
+    <symbol id="icon-play" viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z"/></symbol>
+    <symbol id="icon-pause" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="icon-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+  </svg>
+
+  <div id="home" class="site">
+    <a class="skip" href="#content">Skip to content</a>
+
+    <!-- ===================== HEADER ===================== -->
+    <header class="site-header container reveal">
+      <a class="brand" href="#home" aria-label="Syeda Mahjabin Proma, home">
+        <span class="brand__mark panel">SP</span>
+        <span class="brand__name">Syeda Proma</span>
+      </a>
+
+      <nav class="site-nav inset pill" aria-label="Primary">
+        <a class="navlink" href="#about">About</a>
+        <a class="navlink" href="#experience">Experience</a>
+        <a class="navlink" href="#projects">Projects</a>
+        <a class="navlink" href="#contact">Contact</a>
+      </nav>
+
+      <div class="site-header__actions">
+        <button class="btn btn-secondary btn-ic" type="button" data-motion-toggle aria-label="Pause background motion" aria-pressed="false">
+          <svg class="icon icon--play icon--md" aria-hidden="true"><use href="#icon-play"/></svg>
+          <svg class="icon icon--pause icon--md" aria-hidden="true"><use href="#icon-pause"/></svg>
+        </button>
+        <button class="btn btn-secondary btn-ic" type="button" data-theme-toggle aria-label="Switch to dark theme">
+          <svg class="icon icon--sun icon--md" aria-hidden="true"><use href="#icon-sun"/></svg>
+          <svg class="icon icon--moon icon--md" aria-hidden="true"><use href="#icon-moon"/></svg>
+        </button>
+        <a class="btn btn-secondary" href="#contact">Say hello</a>
+      </div>
+    </header>
+
+    <main id="content">
+
+      <!-- ===================== HERO ===================== -->
+      <section class="hero container">
+        <div class="hero__content">
+          <div class="hero__status inset pill reveal">
+            <span class="status"><span class="live"></span>Exploring Master's programs</span>
+          </div>
+
+          <h1 class="hero__title reveal">I build AI that <span class="hl">sees, learns</span> and predicts.</h1>
+
+          <p class="hero__lead lead reveal">Computer Science graduate from BRAC University (CGPA 3.64), working across machine learning, computer vision and data science, and aiming to build scalable, data-driven intelligent systems.</p>
+
+          <div class="hero__actions reveal">
+            <a class="btn btn-primary" href="#projects">
+              See the work
+              <span class="nest"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></span>
+            </a>
+            <a class="btn btn-secondary" href="#">
+              <svg class="icon" aria-hidden="true"><use href="#icon-download"/></svg>
+              Get my résumé
+            </a>
+          </div>
+
+          <p class="hero__location small muted reveal">
+            <svg class="icon" aria-hidden="true"><use href="#icon-map-pin"/></svg>
+            Dhanmondi, Dhaka, Bangladesh
+          </p>
+        </div>
+
+        <!-- Asymmetrical bento -->
+        <div class="bento">
+          <div class="bento__portrait panel pop">
+            <div class="bento__photo ph-img">
+              <svg class="icon icon--3xl" aria-hidden="true"><use href="#icon-user"/></svg>
+              Portfolio photo
+              <span class="ph-img__note">Portrait 4:5<br>Suggested 800 × 1000</span>
+            </div>
+          </div>
+
+          <div class="bento__tile bento__tile--gpa panel warm pop">
+            <div class="metric"><strong>3.64</strong></div>
+            <p class="bento__caption small">CGPA out of 4.00<br>BRAC University</p>
+          </div>
+
+          <div class="bento__tile bento__tile--years panel pop">
+            <div class="bento__years">2021 – 2025</div>
+            <div class="bento__degree small muted">B.Sc. Computer Science</div>
+          </div>
+
+          <div class="bento__focus panel pill pop">
+            <svg class="icon icon--md" aria-hidden="true"><use href="#icon-chip"/></svg>
+            AI · Machine learning · Computer vision
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== TOOLKIT ===================== -->
+      <section class="toolkit" aria-label="Tools and methods">
+        <p class="toolkit__title eyebrow quiet">Tools &amp; methods</p>
+        <div class="marquee" data-marquee>
+          <ul class="track">
+            <li class="mitem panel pill">Python</li>
+            <li class="mitem panel pill">TensorFlow</li>
+            <li class="mitem panel pill">Keras</li>
+            <li class="mitem panel pill">OpenCV</li>
+            <li class="mitem panel pill">YOLOv8</li>
+            <li class="mitem panel pill">CNNs</li>
+            <li class="mitem panel pill">Random Forest</li>
+            <li class="mitem panel pill">XGBoost</li>
+            <li class="mitem panel pill">Naive Bayes</li>
+            <li class="mitem panel pill">TF-IDF</li>
+            <li class="mitem panel pill">JavaScript</li>
+            <li class="mitem panel pill">Data Structures &amp; Algorithms</li>
+            <li class="mitem panel pill">OOP</li>
+            <li class="mitem panel pill">Version Control</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===================== STATS ===================== -->
+      <section class="stats container sec sr">
+        <h2 class="stats__title">Turning data<br>into insight</h2>
+        <div class="stats__grid">
+          <div class="stat panel lift metric">
+            <strong data-count-to="3.64" data-decimals="2">3.64</strong>
+            <p class="stat__label small muted">CGPA out of 4.00</p>
+          </div>
+          <div class="stat panel lift metric">
+            <strong data-count-to="5">5</strong>
+            <p class="stat__label small muted">AI &amp; ML projects, thesis included</p>
+          </div>
+          <div class="stat panel lift metric">
+            <strong data-count-to="3">3</strong>
+            <p class="stat__label small muted">Teaching &amp; mentoring roles</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== ABOUT ===================== -->
+      <section id="about" class="about container sec sec--flush-top">
+        <div class="about__main">
+          <div class="about__intro sr">
+            <span class="eyebrow">About</span>
+            <h2>Research, education<br>and teaching</h2>
+            <p class="lead">A foundation in AI, machine learning, computer vision and data science, built through a computer science degree, thesis research, hands-on projects and years of helping other students learn.</p>
+          </div>
+
+          <div class="about__cards">
+            <div class="feature-card panel lift sr">
+              <span class="icbox"><svg class="icon icon--xl" aria-hidden="true"><use href="#icon-graduation-cap"/></svg></span>
+              <h3>Education</h3>
+              <p class="small muted">B.Sc. in Computer Science, BRAC University. May 2021 to August 2025. CGPA 3.64 / 4.00.</p>
+            </div>
+            <div class="feature-card panel lift sr">
+              <span class="icbox"><svg class="icon icon--xl" aria-hidden="true"><use href="#icon-chip"/></svg></span>
+              <h3>Research focus</h3>
+              <p class="small muted">Artificial intelligence, machine learning, computer vision and data science for real-world applications.</p>
+            </div>
+            <div class="feature-card panel lift sr">
+              <span class="icbox"><svg class="icon icon--xl" aria-hidden="true"><use href="#icon-book"/></svg></span>
+              <h3>Teaching</h3>
+              <p class="small muted">JavaScript mentor and private tutor in Python, OOP, data structures, algorithms, mathematics and ICT.</p>
+            </div>
+          </div>
+        </div>
+
+        <aside class="objective panel warm sr">
+          <!-- Neural core: the core pulses, a sonar wave travels out, then the nodes fire together -->
+          <div class="objective__net net" aria-hidden="true">
+            <svg class="net__lines" viewBox="0 0 200 200" fill="none" stroke-width="3" stroke-linecap="round">
+              <path d="M100 100L180 100M100 100L140 169M100 100L60 169M100 100L20 100M100 100L60 31M100 100L140 31"/>
+              <path class="net__rim" d="M180 100L140 169L60 169L20 100L60 31L140 31Z"/>
+            </svg>
+            <span class="ring"></span>
+            <span class="node node--e"></span>
+            <span class="node node--se"></span>
+            <span class="node node--sw"></span>
+            <span class="node node--w"></span>
+            <span class="node node--nw"></span>
+            <span class="node node--ne"></span>
+            <span class="core">AI</span>
+          </div>
+
+          <div class="objective__spacer"></div>
+
+          <span class="eyebrow quiet">Research objective</span>
+          <h3 class="objective__title">Intelligent systems at scale</h3>
+          <p class="objective__text small">Interested in a Master's in Computer Science or a related field, to build scalable, data-driven intelligent systems and contribute to advanced AI research.</p>
+          <a class="btn btn-primary" href="#contact">
+            Start a conversation
+            <span class="nest"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></span>
+          </a>
+        </aside>
+      </section>
+
+      <!-- ===================== EXPERIENCE ===================== -->
+      <section id="experience" class="container sec sec--flush-top">
+        <header class="sec-head sr">
+          <div>
+            <span class="eyebrow">Experience</span>
+            <h2>Where I've worked<br>and taught</h2>
+          </div>
+          <p class="lead">From supporting real project work as a software trainee to mentoring students in programming and mathematics.</p>
+        </header>
+
+        <div class="experience">
+          <article class="role role--featured panel lift sr">
+            <div class="role__head">
+              <span class="icbox"><svg class="icon icon--xl" aria-hidden="true"><use href="#icon-briefcase"/></svg></span>
+              <div>
+                <h3>Trainee Software Engineer (Intern)</h3>
+                <p class="role__org small muted">Bangladesh Software Solution (BSS)</p>
+              </div>
+            </div>
+            <span class="role__period chip">Feb 2026 – Present</span>
+            <ul class="bullets small">
+              <li>Assisted in software development, testing and debugging under senior supervision.</li>
+              <li>Collaborated with development teams on assigned tasks and real-world project components.</li>
+              <li>Gained hands-on experience with version control, debugging practices and code optimization.</li>
+            </ul>
+          </article>
+
+          <div class="experience__list">
+            <article class="role role--compact panel lift sr">
+              <div class="role__row">
+                <h3>JavaScript Mentor</h3>
+                <span class="chip">2023</span>
+              </div>
+              <p class="small muted">Institute of Young Talents</p>
+            </article>
+            <article class="role role--compact panel lift sr">
+              <div class="role__row">
+                <h3>Private Tutor, Undergraduate</h3>
+                <span class="chip">2024 – 2025</span>
+              </div>
+              <p class="small muted">Python, OOP, Data Structures and Algorithms</p>
+            </article>
+            <article class="role role--compact panel lift sr">
+              <div class="role__row">
+                <h3>Private Tutor, Grades 9–12</h3>
+                <span class="chip">2020 – Ongoing</span>
+              </div>
+              <p class="small muted">Mathematics and ICT</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== PROJECTS ===================== -->
+      <section id="projects" class="container sec sec--flush-top">
+        <header class="sec-head sr">
+          <div>
+            <span class="eyebrow">Selected work</span>
+            <h2>What I've built</h2>
+          </div>
+          <p class="lead">An undergraduate thesis in computer vision, plus machine-learning projects across healthcare, text classification, sensing and price prediction.</p>
+        </header>
+
+        <!-- Thesis feature -->
+        <article class="thesis panel lift sr">
+          <div class="thesis__media ph-img">
+            <svg class="icon icon--3xl" aria-hidden="true"><use href="#icon-image"/></svg>
+            Thesis image
+            <span class="ph-img__note">Suggested 800 × 600</span>
+          </div>
+          <div class="thesis__body">
+            <span class="thesis__tag chip">Undergraduate thesis</span>
+            <h3 class="thesis__title">Universal Photography Suggestion System With AI</h3>
+            <ul class="bullets bullets--tight small">
+              <li>End-to-end deep learning pipeline that analyzes image composition, orientation and subject positioning to suggest improvements.</li>
+              <li>Best composition classification with EfficientNetB0, lowest orientation MSE with EfficientNetB2, and YOLOv8 subject detection using bounding-box logic on COCO.</li>
+              <li>Outputs camera adjustments such as “move-left”, “zoom-in” and “move-upward”.</li>
+            </ul>
+            <ul class="chips" aria-label="Technologies">
+              <li class="chip">Python</li>
+              <li class="chip">TensorFlow</li>
+              <li class="chip">Keras</li>
+              <li class="chip">OpenCV</li>
+              <li class="chip">YOLOv8</li>
+              <li class="chip">CNNs</li>
+            </ul>
+            <p class="small muted">Datasets: Customized CCIP-Dataset · Modified DRC-D · Microsoft COCO</p>
+          </div>
+        </article>
+
+        <!-- Pipeline mini-demo -->
+        <div class="pipeline inset sr">
+          <div class="pipeline__head">
+            <h3>How the thesis system thinks</h3>
+            <span class="eyebrow quiet">Pipeline · 4 stages</span>
+          </div>
+          <ol class="pipeline__steps">
+            <li class="step panel">
+              <span class="num">01</span>
+              <h4 class="step__title">Composition</h4>
+              <p class="small muted">EfficientNetB0 delivered the best composition classification result.</p>
+            </li>
+            <li class="step panel">
+              <span class="num">02</span>
+              <h4 class="step__title">Orientation</h4>
+              <p class="small muted">EfficientNetB2 reached the lowest MSE for orientation prediction.</p>
+            </li>
+            <li class="step panel">
+              <span class="num">03</span>
+              <h4 class="step__title">Subject</h4>
+              <p class="small muted">YOLOv8 finds the main subject through bounding-box logic on COCO.</p>
+            </li>
+            <li class="step panel">
+              <span class="num">04</span>
+              <h4 class="step__title">Suggestion</h4>
+              <p class="small muted">“move-left”, “zoom-in”, “move-upward” and other camera adjustments.</p>
+            </li>
+          </ol>
+        </div>
+
+        <!-- Project cards -->
+        <div class="projects">
+          <article class="project panel lift sr">
+            <div class="project__media ph-img">
+              <svg class="icon icon--2xl" aria-hidden="true"><use href="#icon-image"/></svg>
+              Project image
+            </div>
+            <div class="project__body">
+              <span class="eyebrow quiet">01 · Healthcare ML</span>
+              <h3>Lung Cancer Prediction System</h3>
+              <p class="project__text small muted">A model that predicts lung cancer risk from patient data, comparing classical and neural approaches.</p>
+              <ul class="project__tags chips" aria-label="Technologies">
+                <li class="chip">Random Forest</li>
+                <li class="chip">MLP</li>
+                <li class="chip">1D CNN</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="project panel lift sr">
+            <div class="project__media ph-img">
+              <svg class="icon icon--2xl" aria-hidden="true"><use href="#icon-image"/></svg>
+              Project image
+            </div>
+            <div class="project__body">
+              <span class="eyebrow quiet">02 · Classification</span>
+              <h3>Fabric Wetness Detection Model</h3>
+              <p class="project__text small muted">Classifies fabric as wet or dry from temperature and humidity features of a custom-built dataset.</p>
+              <ul class="project__tags chips" aria-label="Technologies">
+                <li class="chip">Logistic Regression</li>
+                <li class="chip">Random Forest</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="project panel lift sr">
+            <div class="project__media ph-img">
+              <svg class="icon icon--2xl" aria-hidden="true"><use href="#icon-image"/></svg>
+              Project image
+            </div>
+            <div class="project__body">
+              <span class="eyebrow quiet">03 · Natural language</span>
+              <h3>Spam Ham Classifier Model</h3>
+              <p class="project__text small muted">An ML-based system that classifies emails and SMS messages as spam or ham using TF-IDF text vectorization.</p>
+              <ul class="project__tags chips" aria-label="Technologies">
+                <li class="chip">Naive Bayes</li>
+                <li class="chip">Logistic Regression</li>
+                <li class="chip">Random Forest</li>
+                <li class="chip">TF-IDF</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="project panel lift sr">
+            <div class="project__media ph-img">
+              <svg class="icon icon--2xl" aria-hidden="true"><use href="#icon-image"/></svg>
+              Project image
+            </div>
+            <div class="project__body">
+              <span class="eyebrow quiet">04 · Regression</span>
+              <h3>Dhaka House Rent Prediction Model</h3>
+              <p class="project__text small muted">Predicts house rent across Dhaka, benchmarking several regression and ensemble models.</p>
+              <ul class="project__tags chips" aria-label="Technologies">
+                <li class="chip">Random Forest</li>
+                <li class="chip">Linear Regression</li>
+                <li class="chip">XGBoost</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===================== CONTACT ===================== -->
+      <section id="contact" class="contact container">
+        <div class="contact__panel panel warm sr">
+          <div class="contact__orb orb" aria-hidden="true"></div>
+
+          <div class="contact__intro">
+            <span class="eyebrow">Contact</span>
+            <h2>Let's build something intelligent together.</h2>
+            <p class="lead">Research collaboration, a Master's program or an engineering role: say hello and I'll get back to you.</p>
+            <div class="contact__actions">
+              <a class="btn btn-primary" href="mailto:syedamahjabinproma@gmail.com">
+                Send an email
+                <span class="nest"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></span>
+              </a>
+              <a class="btn btn-secondary" href="#">
+                <svg class="icon" aria-hidden="true"><use href="#icon-download"/></svg>
+                Get my résumé
+              </a>
+            </div>
+          </div>
+
+          <div class="contact__details">
+            <a class="contact-card panel lift" href="mailto:syedamahjabinproma@gmail.com">
+              <span class="icbox icbox--sm"><svg class="icon icon--lg" aria-hidden="true"><use href="#icon-mail"/></svg></span>
+              <span class="contact-card__text">
+                <span class="contact-card__label eyebrow quiet">Email</span>
+                <span class="contact-card__value contact-card__value--wrap">syedamahjabinproma@gmail.com</span>
+              </span>
+            </a>
+            <a class="contact-card panel lift" href="tel:+8801688726039">
+              <span class="icbox icbox--sm"><svg class="icon icon--lg" aria-hidden="true"><use href="#icon-phone"/></svg></span>
+              <span class="contact-card__text">
+                <span class="contact-card__label eyebrow quiet">Phone</span>
+                <span class="contact-card__value">+880 1688 726039</span>
+              </span>
+            </a>
+            <div class="contact-card panel">
+              <span class="icbox icbox--sm"><svg class="icon icon--lg" aria-hidden="true"><use href="#icon-map-pin"/></svg></span>
+              <span class="contact-card__text">
+                <span class="contact-card__label eyebrow quiet">Location</span>
+                <span class="contact-card__value">Dhanmondi, Dhaka, Bangladesh</span>
+              </span>
+            </div>
+            <div class="contact__socials">
+              <a class="contact__social btn btn-secondary" href="#">
+                <svg class="icon" aria-hidden="true"><use href="#icon-link"/></svg>
+                LinkedIn
+              </a>
+              <a class="contact__social btn btn-secondary" href="#">
+                <svg class="icon" aria-hidden="true"><use href="#icon-code"/></svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="site-footer container">
+      <p class="small muted">© 2026 Syeda Mahjabin Proma</p>
+      <a class="site-footer__top btn btn-secondary" href="#home">
+        Back to top
+        <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up"/></svg>
+      </a>
+    </footer>
+  </div>
+</body>
+</html>

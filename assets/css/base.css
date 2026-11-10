@@ -1,0 +1,208 @@
+/* =========================================================================
+   Base — fluid root size, reset, page shell, typography, layout primitives
+   ========================================================================= */
+
+/* ---------- fluid root size ---------- */
+/* Up to the 1440px design width, 1rem = the browser default (16px).
+   Wider than that, 1rem grows in proportion to the viewport, so the whole
+   rem-based layout scales up as one piece (like zooming) instead of leaving a
+   small page floating in empty space on large / high-resolution screens.
+   Growth stops at 2× (a 2880px-wide viewport). */
+html {
+  font-size: clamp(100%, 100vw * 16 / 1440, 200%);
+  scroll-behavior: smooth;
+}
+
+/* ---------- reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+  transition:
+    background-color var(--motion-base) var(--ease-standard),
+    color var(--motion-base) var(--ease-standard);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: 0;
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+figure {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+/* ---------- page shell ---------- */
+/* `clip` (not `hidden`) so the shell never becomes a scroll container,
+   which would capture the scroll-driven reveal timelines. */
+.site {
+  position: relative;
+  overflow: clip;
+}
+
+/* ---------- layout ---------- */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.sec {
+  padding-block: var(--section-y);
+}
+
+.sec--flush-top {
+  padding-top: 0;
+}
+
+.sec-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-6);
+  margin-bottom: var(--space-12);
+}
+
+.sec-head > div {
+  flex: 1 1 22.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sec-head > p {
+  flex: 1 1 22.5rem;
+  max-width: 32.5rem;
+}
+
+/* ---------- typography ---------- */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-display);
+}
+
+h1 {
+  font-size: clamp(2.5rem, 5.4vw, 4.25rem);
+  font-weight: 600;
+}
+
+h2 {
+  font-size: clamp(1.875rem, 3.8vw, var(--text-3xl));
+  font-weight: 600;
+}
+
+h3 {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  letter-spacing: -.015em;
+  line-height: 1.2;
+}
+
+.lead {
+  max-width: 35rem;
+  font-size: var(--text-lg);
+  color: var(--fg-2);
+}
+
+.small {
+  font-size: var(--text-sm);
+  letter-spacing: .01em;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--meta);
+}
+
+.eyebrow.quiet {
+  color: var(--muted);
+}
+
+/* ---------- accessibility ---------- */
+a:focus-visible,
+button:focus-visible {
+  outline: .1875rem solid var(--accent);
+  outline-offset: .1875rem;
+}
+
+.skip {
+  position: absolute;
+  top: -5rem;
+  left: var(--space-4);
+  z-index: 10;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--fg);
+  color: var(--bg);
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+
+.skip:focus {
+  top: var(--space-4);
+}
+
+/* ---------- icons ---------- */
+/* The inline sprite only holds <symbol> definitions; it never renders itself. */
+.icon-sprite {
+  display: none;
+}
+
+/* Shared SVG icon styling (icons are <use> references into the sprite).
+   Sized in rem so they scale with the layout. */
+.icon {
+  width: 1.125rem;   /* 18px */
+  height: 1.125rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icon--md  { width: 1.25rem;  height: 1.25rem; }   /* 20px */
+.icon--lg  { width: 1.375rem; height: 1.375rem; }  /* 22px */
+.icon--xl  { width: 1.625rem; height: 1.625rem; }  /* 26px */
+.icon--2xl { width: 2rem;     height: 2rem; }      /* 32px */
+.icon--3xl { width: 2.5rem;   height: 2.5rem; }    /* 40px */
