@@ -160,9 +160,29 @@
   --d: .2s;
   grid-row: 1 / span 2;
   aspect-ratio: 4 / 5;
+  position: relative;
+  isolation: isolate;
   display: flex;
   padding: var(--space-3);
   overflow: hidden;
+}
+
+/* A real photo fills the whole clay tile: its white background is multiplied
+   into a warm wash, and an inner rim keeps the tile's soft clay edge. */
+.bento__portrait:has(img) {
+  padding: 0;
+  background: var(--portrait-wash);
+}
+
+.bento__portrait:has(img)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow:
+    inset .25rem .25rem .625rem rgba(255, 255, 255, .55),
+    inset -.3125rem -.375rem .75rem rgba(170, 105, 45, .18);
+  pointer-events: none;
 }
 
 .bento__photo {
@@ -170,6 +190,12 @@
   min-width: 0;
   min-height: 0;
   border-radius: calc(var(--radius-lg) - .75rem);
+}
+
+img.bento__photo {
+  border-radius: 0;
+  object-position: 50% 20%;
+  mix-blend-mode: multiply;
 }
 
 .bento__tile {

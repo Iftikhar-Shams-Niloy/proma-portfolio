@@ -102,12 +102,11 @@ All copy lives in `index.html`. Several items are still placeholders:
 
 | What | Where in `index.html` |
 | --- | --- |
-| Portrait photo (4:5, about 800 × 1000) | `.bento__photo` in the hero |
 | Thesis image (about 800 × 600) | `.thesis__media` |
 | Project images | `.project__media` (×4) |
 | Resume link | Both "Get my resume" buttons (`href="#"`) |
 
-The LinkedIn and GitHub buttons (`.contact__social`) already point to the live profiles.
+The portrait (`assets/images/portrait.jpg`) and the LinkedIn and GitHub buttons (`.contact__social`) are already real.
 
 **To use a real image,** put the file in `assets/images/`. Then replace the placeholder `<div class="… ph-img">`
 with an `<img>` that keeps the layout class and adds `media-cover`:

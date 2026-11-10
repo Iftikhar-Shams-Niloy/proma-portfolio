@@ -51,6 +51,10 @@
   --motion-base: 240ms;
   --ease-standard: cubic-bezier(.2, 0, 0, 1);
 
+  /* Portrait backdrop: a warm studio wash the photo's white background melts into.
+     Deliberately the same in both themes, since a photo needs a light backdrop. */
+  --portrait-wash: radial-gradient(120% 90% at 50% 30%, #FFF6E4 0%, #FFE9C7 55%, #FFDDB0 100%);
+
   /* Colour — light theme */
   --bg: #FFF8E7;
   --surface: #FFEFD5;
