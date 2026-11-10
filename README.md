@@ -106,7 +106,8 @@ All copy lives in `index.html`. Several items are still placeholders:
 | Thesis image (about 800 × 600) | `.thesis__media` |
 | Project images | `.project__media` (×4) |
 | Resume link | Both "Get my resume" buttons (`href="#"`) |
-| LinkedIn and GitHub URLs | `.contact__social` buttons (`href="#"`) |
+
+The LinkedIn and GitHub buttons (`.contact__social`) already point to the live profiles.
 
 **To use a real image,** put the file in `assets/images/`. Then replace the placeholder `<div class="… ph-img">`
 with an `<img>` that keeps the layout class and adds `media-cover`:
