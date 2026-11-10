@@ -68,7 +68,7 @@
 }
 
 /* Neural core, one cycle: the core pulses and launches a wave; the wave
-   reaches the six outer nodes at 52% and only then do they beat together. */
+   reaches the six outer nodes at 52% and only then do they beat together, once. */
 @keyframes breathe {
   0%, 28%, 100% { transform: scale(1); }
   8%            { transform: scale(1.1); }
@@ -83,10 +83,8 @@
 
 @keyframes fire {
   0%, 48%, 100% { transform: scale(1); }
-  53%           { transform: scale(1.4); }
-  58%           { transform: scale(1.05); }
-  62%           { transform: scale(1.25); }
-  72%           { transform: scale(1); }
+  54%           { transform: scale(1.4); }
+  66%           { transform: scale(1); }
 }
 
 /* ---------- user-controlled pause for ambient motion (WCAG 2.2.2) ---------- */

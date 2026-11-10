@@ -29,6 +29,8 @@
   <script defer src="assets/js/modules/marquee.js"></script>
   <script defer src="assets/js/modules/counters.js"></script>
   <script defer src="assets/js/modules/scroll-reveal.js"></script>
+  <script defer src="assets/js/modules/sticky-nav.js"></script>
+  <script defer src="assets/js/modules/scroll-spy.js"></script>
   <script defer src="assets/js/main.js"></script>
 </head>
 <body>
@@ -58,20 +60,23 @@
     <a class="skip" href="#content">Skip to content</a>
 
     <!-- ===================== HEADER ===================== -->
-    <header class="site-header container reveal">
-      <a class="brand" href="#home" aria-label="Syeda Mahjabin Proma, home">
+    <header class="site-header container">
+      <a class="brand reveal" href="#home" aria-label="Syeda Mahjabin Proma, home">
         <span class="brand__mark panel">SP</span>
         <span class="brand__name">Syeda Proma</span>
       </a>
 
-      <nav class="site-nav inset pill" aria-label="Primary">
-        <a class="navlink" href="#about">About</a>
-        <a class="navlink" href="#experience">Experience</a>
-        <a class="navlink" href="#projects">Projects</a>
-        <a class="navlink" href="#contact">Contact</a>
-      </nav>
+      <!-- The slot keeps the nav's place in the header while the nav is pinned to the top -->
+      <div class="site-nav-slot" data-sticky-nav>
+        <nav class="site-nav panel pill reveal" aria-label="Primary">
+          <a class="navlink" href="#about">About</a>
+          <a class="navlink" href="#experience">Experience</a>
+          <a class="navlink" href="#projects">Projects</a>
+          <a class="navlink" href="#contact">Contact</a>
+        </nav>
+      </div>
 
-      <div class="site-header__actions">
+      <div class="site-header__actions reveal">
         <button class="btn btn-secondary btn-ic" type="button" data-motion-toggle aria-label="Pause background motion" aria-pressed="false">
           <svg class="icon icon--play icon--md" aria-hidden="true"><use href="#icon-play"/></svg>
           <svg class="icon icon--pause icon--md" aria-hidden="true"><use href="#icon-pause"/></svg>

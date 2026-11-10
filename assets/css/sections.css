@@ -39,11 +39,45 @@
   letter-spacing: -.01em;
 }
 
+/* Primary nav: a raised, fully opaque clay pill (.panel.pill) */
+.site-nav-slot {
+  min-width: 0;
+}
+
 .site-nav {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-1);
   padding: .375rem;
+}
+
+/* Pinned to the top once the header scrolls away (js/modules/sticky-nav.js).
+   JS supplies the horizontal position and width the nav had in the header,
+   so it only ever moves vertically. */
+.site-nav.is-stuck {
+  position: fixed;
+  top: var(--space-4);  /* keep in sync with PIN_OFFSET_REM in sticky-nav.js */
+  left: var(--nav-left, 50%);
+  width: var(--nav-width, auto);
+  z-index: 20;
+  box-shadow: var(--elev-lift);
+}
+
+/* Phones: one row of equal-width links (it pins to the top, so keep it short) */
+@media (max-width: 639px) {
+  .site-nav-slot {
+    flex-basis: 100%;
+  }
+
+  .site-nav {
+    justify-content: space-between;
+  }
+
+  .site-nav .navlink {
+    flex: 1 1 auto;
+    justify-content: center;
+    padding-inline: var(--space-2);
+  }
 }
 
 .site-header__actions {

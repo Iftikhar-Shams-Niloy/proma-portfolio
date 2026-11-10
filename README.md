@@ -11,7 +11,11 @@ no frameworks, no build step, no dependencies.
 - **Light and dark themes.** A toggle in the header switches them, and the choice is remembered.
 - **Pause / play for ambient motion** ([WCAG 2.2.2](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide)), also remembered.
 - **Respects `prefers-reduced-motion`.** All animation stops and the skills marquee becomes a static, wrapped list.
-- **Responsive.** Fluid type, wrapping flex layouts, and rhythm breakpoints at `1023px` and `639px`.
+- **Sticky clay navigation.** The raised, fully opaque nav pill pins to the top as you scroll, and the
+  link for the section in view is shown "punched down" into it.
+- **Responsive at any size.** Fluid type, wrapping flex layouts and rhythm breakpoints at `1023px` and
+  `639px` for small screens. Above the 1440px design width, the whole layout scales up in proportion,
+  so large and high-resolution displays get the same composition instead of a small page with wide margins.
 - **Accessible.** Skip link, semantic landmarks, visible focus rings, labelled icon buttons, decorative graphics hidden from screen readers.
 
 ## Animations
@@ -24,9 +28,10 @@ no frameworks, no build step, no dependencies.
 | Live status ring | "Exploring Master's programs" dot | `ring` keyframes |
 | Infinite skills marquee | Tools & methods strip | `marq` keyframes; JS eases it to a stop on hover |
 | Count-up numbers | Stats row | `counters.js`, 1.2s ease-out |
-| Neural core | About → research objective | `breathe`, `sonar` and `fire`, all on a shared 3.6s cycle |
+| Neural core | About → research objective | `breathe`, `sonar` and `fire` on a shared 3.6s cycle: the core pulses, a wave travels out, then the outer nodes beat once |
 | Pipeline stages light up in turn | Thesis pipeline | `lit` keyframes on a 10s cycle, 2.5s apart |
 | Floating clay orb | Contact panel | `float` keyframes |
+| Nav links press into the bar | Sticky nav | Light press on hover, pressed in for the current section (scroll-spy sets `aria-current`), deepest while clicking |
 | Hover micro-interactions | Cards, buttons, nav, marquee items, icon boxes | CSS transitions |
 
 ## Project structure
@@ -36,23 +41,24 @@ no frameworks, no build step, no dependencies.
 ├── index.html                  # The page: all content and markup
 ├── assets/
 │   ├── css/
-│   │   ├── tokens.css          # Design tokens: colour, type, spacing, radii, shadows; light + dark themes
-│   │   ├── base.css            # Reset, page shell, typography, layout primitives, a11y helpers
+│   │   ├── tokens.css          # Design tokens (in rem): colour, type, spacing, radii, shadows; light + dark themes
+│   │   ├── base.css            # Fluid root size, reset, page shell, typography, layout, a11y, icons
 │   │   ├── components.css      # Reusable pieces: panel, button, chip, icon box, orb, neural core, marquee, step
 │   │   ├── sections.css        # Page-specific layout, in document order (header → footer)
 │   │   └── motion.css          # Entrance animations, keyframes, pause state, reduced motion
 │   ├── js/
 │   │   ├── boot.js             # Runs in <head>: restores the saved theme / motion choice before first paint
-│   │   ├── main.js             # ES module entry point: wires everything up
+│   │   ├── main.js             # Entry point (loaded last): wires everything up
 │   │   └── modules/
 │   │       ├── preferences.js  # Theme and motion toggles
 │   │       ├── storage.js      # Safe localStorage wrapper
-│   │       ├── marquee.js      # Duplicates marquee items and eases its speed on hover
+│   │       ├── marquee.js      # Fills the marquee for any screen width; eases its speed on hover
 │   │       ├── counters.js     # Count-up numbers
-│   │       └── scroll-reveal.js  # Fallback reveal for browsers without scroll timelines
+│   │       ├── scroll-reveal.js  # Fallback reveal for browsers without scroll timelines
+│   │       ├── sticky-nav.js   # Pins the nav to the top once the header scrolls away
+│   │       └── scroll-spy.js   # Marks the nav link of the section in view
 │   └── images/
 │       └── favicon.svg
-├── Portfolio-html-design/      # Original design mockup, kept as the visual reference (not part of the site)
 ├── .editorconfig
 └── .gitignore
 ```
@@ -64,6 +70,11 @@ no frameworks, no build step, no dependencies.
 - **Class names:** reusable components keep short names (`.panel`, `.btn`, `.chip`). Section-level
   layout uses BEM-style names (`.hero__content`, `.role--featured`, `.contact-card__label`).
 - **No inline styles.** Every visual value comes from a token in `tokens.css` or a class.
+- **Sizes are in `rem`** (1rem = 16px at the design width), never `px`, so everything scales together.
+  Only media queries use `px`, because they describe the viewport.
+- **Scripts are plain, deferred files**, not ES modules, so the site also works when opened from disk.
+  Each file in `js/modules/` registers itself on one global namespace (`window.Portfolio.*`), and
+  `main.js`, loaded last, calls them. Keep the `<script defer>` order in `index.html`.
 - **State lives on `<html>`** as `data-theme="light|dark"` and `data-motion="playing|paused"`, and CSS
   reacts to it. JavaScript only flips those attributes.
 - **JS hooks use `data-*` attributes** (`data-theme-toggle`, `data-marquee`, `data-count-to`), not
@@ -73,7 +84,9 @@ no frameworks, no build step, no dependencies.
 
 ## Running locally
 
-The scripts are ES modules, which browsers will not load from `file://`. Serve the folder over HTTP instead:
+Open `index.html` in a browser. No build step or server is needed.
+
+To preview it the way a host will serve it, run a local server:
 
 ```bash
 python3 -m http.server 8000
@@ -111,6 +124,18 @@ The same pattern works for `thesis__media` and `project__media`.
 
 **To change colours or spacing,** edit the tokens in `assets/css/tokens.css`. The dark theme overrides
 are in the `:root[data-theme="dark"]` block.
+
+## Responsive scaling
+
+The root font size is set in `assets/css/base.css`:
+
+```css
+html { font-size: clamp(100%, 100vw * 16 / 1440, 200%); }
+```
+
+Up to a 1440px-wide window, `1rem` is the browser default (16px). Wider than that, it grows with the
+window, up to 2× at 2880px, and every rem-based size grows with it. To change where scaling starts,
+change `1440`; to change how far it goes, change `200%`.
 
 ## Browser support
 

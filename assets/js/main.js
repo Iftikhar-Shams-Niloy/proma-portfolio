@@ -11,4 +11,6 @@
   Portfolio.marquee.init(document.querySelector('[data-marquee]'));
   Portfolio.counters.init(document.querySelectorAll('[data-count-to]'));
   Portfolio.scrollReveal.init(document.querySelectorAll('.sr'));
+  Portfolio.stickyNav.init(document.querySelector('[data-sticky-nav]'));
+  Portfolio.scrollSpy.init(document.querySelectorAll('.site-nav a[href^="#"]'));
 })(window.Portfolio);

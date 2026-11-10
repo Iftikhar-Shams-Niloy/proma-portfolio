@@ -118,10 +118,25 @@
     box-shadow var(--motion-fast) var(--ease-standard);
 }
 
+/* Links press *into* the raised bar, in three depths:
+   hover = a light press, current section = pressed in, click = pressed deepest. */
 .navlink:hover {
   color: var(--fg);
-  background: var(--surface);
-  box-shadow: var(--elev-btn);
+  background: color-mix(in oklab, var(--surface-in) 35%, var(--surface));
+  box-shadow: inset .125rem .125rem .3125rem var(--in-d), inset -.125rem -.125rem .3125rem var(--in-l);
+}
+
+/* The link of the section in view (aria-current is set by js/modules/scroll-spy.js) */
+.navlink[aria-current] {
+  color: var(--fg);
+  background: var(--surface-in);
+  box-shadow: var(--elev-inset);
+}
+
+.navlink:active {
+  color: var(--fg);
+  background: color-mix(in oklab, var(--surface-in) 80%, var(--surface-warm));
+  box-shadow: inset .5rem .5rem 1.125rem var(--in-d), inset -.375rem -.375rem .875rem var(--in-l);
 }
 
 /* ---------- chips ---------- */

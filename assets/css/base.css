@@ -80,6 +80,11 @@ ul {
   padding-block: var(--section-y);
 }
 
+/* Anchor jumps stop below the pinned nav instead of underneath it */
+section[id] {
+  scroll-margin-top: 6rem;
+}
+
 .sec--flush-top {
   padding-top: 0;
 }
@@ -170,7 +175,7 @@ button:focus-visible {
   position: absolute;
   top: -5rem;
   left: var(--space-4);
-  z-index: 10;
+  z-index: 30;  /* above the pinned nav */
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-pill);
   background: var(--fg);
