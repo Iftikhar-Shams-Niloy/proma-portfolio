@@ -29,7 +29,7 @@ no frameworks, no build step, no dependencies.
 | Infinite skills marquee | Tools & methods strip | `marq` keyframes; JS eases it to a stop on hover |
 | Count-up numbers | Stats row | `counters.js`, 1.2s ease-out |
 | Neural core | About → research objective | `breathe`, `sonar` and `fire` on a shared 3.6s cycle: the core pulses, a wave travels out, then the outer nodes beat once |
-| Pipeline stages light up in turn | Thesis pipeline | `lit` keyframes on a 10s cycle, 2.5s apart |
+| Pipeline stages pop up in turn | Thesis pipeline | `step-pop` keyframes on a 10s cycle, 2.5s apart: the step rises, deepens its shadow and warms slightly |
 | Floating clay orb | Contact panel | `float` keyframes |
 | Nav links press into the bar | Sticky nav | Light press on hover, pressed in for the current section (scroll-spy sets `aria-current`), deepest while clicking |
 | Hover micro-interactions | Cards, buttons, nav, marquee items, icon boxes | CSS transitions |
@@ -105,7 +105,7 @@ All copy lives in `index.html`. Several items are still placeholders:
 | Portrait photo (4:5, about 800 × 1000) | `.bento__photo` in the hero |
 | Thesis image (about 800 × 600) | `.thesis__media` |
 | Project images | `.project__media` (×4) |
-| Résumé link | Both "Get my résumé" buttons (`href="#"`) |
+| Resume link | Both "Get my resume" buttons (`href="#"`) |
 | LinkedIn and GitHub URLs | `.contact__social` buttons (`href="#"`) |
 
 **To use a real image,** put the file in `assets/images/`. Then replace the placeholder `<div class="… ph-img">`
