@@ -21,6 +21,32 @@
     animation-timeline: view();
     animation-range: entry 0% entry 35%;
   }
+
+  /* Project visuals grow in as their card scrolls into view: the lungs fill,
+     the towers rise and their labels fade in once the visual is fully on screen.
+     Without scroll timelines they simply show in their final state. */
+  .viz {
+    view-timeline: --viz block;
+  }
+
+  .lungs__rise {
+    animation: lung-fill linear both;
+    animation-timeline: --viz;
+    animation-range: entry 30% entry 100%;
+  }
+
+  .tower__block {
+    animation: tower-rise linear both;
+    animation-timeline: --viz;
+    animation-range: entry 30% entry 100%;
+  }
+
+  .lungs__rate,
+  .tower__rent {
+    animation: fade-in linear both;
+    animation-timeline: --viz;
+    animation-range: entry 80% entry 100%;
+  }
 }
 
 /* …and an IntersectionObserver fallback elsewhere (see js/modules/scroll-reveal.js) */
@@ -97,14 +123,68 @@
   66%           { transform: scale(1); }
 }
 
+/* ---------- project visuals (css/project-visuals.css) ---------- */
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+
+/* Lungs: a slow breath, the liquid rising into place (SVG units), and its
+   wavy surface drifting by exactly one wave period (40 units) per loop */
+@keyframes lung-breathe {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.03); }
+}
+
+@keyframes lung-fill {
+  from { transform: translateY(90px); }
+}
+
+@keyframes lung-wave {
+  to { transform: translateX(40px); }
+}
+
+/* Skyline: towers grow from the ground; lit windows fade in and out */
+@keyframes tower-rise {
+  from { transform: scaleY(0); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0; }
+  50%      { opacity: .9; }
+}
+
+/* Inbox: the scanning sweep, the waiting dots and the verdict popping in */
+@keyframes inbox-scan {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+
+@keyframes scan-dots {
+  from { opacity: .35; }
+  to   { opacity: 1; }
+}
+
+@keyframes verdict-pop {
+  from { opacity: 0; transform: scale(.6); }
+  70%  { transform: scale(1.08); }
+}
+
 /* ---------- user-controlled pause for ambient motion (WCAG 2.2.2) ---------- */
+/* CSS loops are paused here; the JS-driven demos (sensor trace, inbox) stop
+   through js/modules/ambient.js. */
 :root[data-motion="paused"] .orb,
 :root[data-motion="paused"] .node,
 :root[data-motion="paused"] .ring,
 :root[data-motion="paused"] .core,
 :root[data-motion="paused"] .track,
 :root[data-motion="paused"] .step,
-:root[data-motion="paused"] .status .live::after {
+:root[data-motion="paused"] .status .live::after,
+:root[data-motion="paused"] .lungs__organ,
+:root[data-motion="paused"] .lungs__liquid,
+:root[data-motion="paused"] .tower__block::after,
+:root[data-motion="paused"] .trace__dot::after,
+:root[data-motion="paused"] .inbox__msg::after,
+:root[data-motion="paused"] .inbox__tag::after {
   animation-play-state: paused;
 }
 
@@ -123,7 +203,18 @@
   .core,
   .track,
   .step,
-  .status .live::after {
+  .status .live::after,
+  .lungs__organ,
+  .lungs__rise,
+  .lungs__liquid,
+  .lungs__rate,
+  .tower__block,
+  .tower__block::after,
+  .tower__rent,
+  .trace__dot::after,
+  .inbox__tag,
+  .inbox__msg::after,
+  .inbox__tag::after {
     animation: none !important;
   }
 

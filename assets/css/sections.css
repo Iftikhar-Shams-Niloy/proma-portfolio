@@ -512,6 +512,38 @@ img.bento__photo {
   margin-top: var(--space-2);
 }
 
+/* Best model result + link to the repository */
+.project__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-4);
+  margin-top: var(--space-3);
+}
+
+.project__result {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--fg-2);
+}
+
+.project__result::before {
+  content: "";
+  flex: none;
+  width: .5rem;
+  height: .5rem;
+  border-radius: 50%;
+  background: var(--success);
+}
+
+.project__result strong {
+  color: var(--fg);
+}
+
 /* ===================== CONTACT ===================== */
 .contact {
   padding-bottom: var(--space-12);

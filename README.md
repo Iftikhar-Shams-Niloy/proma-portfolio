@@ -13,6 +13,15 @@ no frameworks, no build step, no dependencies.
 - **Respects `prefers-reduced-motion`.** All animation stops and the skills marquee becomes a static, wrapped list.
 - **Sticky clay navigation.** The raised, fully opaque nav pill pins to the top as you scroll, and the
   link for the section in view is shown "punched down" into it.
+- **Data-driven project visuals.** Each project card opens with a small animated scene built from that
+  project's own GitHub repository (dataset or notebook), so the picture is also a result. Each card also
+  shows its best model's score and a "View code" link to the repository:
+  - *Lung Cancer Prediction:* clay lungs filled to the real cancer rate (41% under 20 pack-years,
+    76% at 20 or more), plus the other risk factors on wider cards.
+  - *Fabric Wetness Detection:* the 182 readings the Arduino + DHT22 rig logged, played back with a live
+    readout; hover to scrub through them.
+  - *Spam Ham Classifier:* a live inbox where real subject lines from the dataset are scanned and flagged.
+  - *Dhaka House Rent:* a clay skyline of median rent by area, from 28,800 listings.
 - **Responsive at any size.** Fluid type, wrapping flex layouts and rhythm breakpoints at `1023px` and
   `639px` for small screens. Above the 1440px design width, the whole layout scales up in proportion,
   so large and high-resolution displays get the same composition instead of a small page with wide margins.
@@ -30,6 +39,10 @@ no frameworks, no build step, no dependencies.
 | Count-up numbers | Stats row | `counters.js`, 1.2s ease-out |
 | Neural core | About → research objective | `breathe`, `sonar` and `fire` on a shared 3.6s cycle: the core pulses, a wave travels out, then the outer nodes beat once |
 | Pipeline stages pop up in turn | Thesis pipeline | `step-pop` keyframes on a 10s cycle, 2.5s apart: the step rises, deepens its shadow and warms slightly |
+| Lungs breathe and fill | Lung Cancer card | `lung-breathe`; the liquid rises into place as the card scrolls in (`lung-fill`), and its wavy surface drifts (`lung-wave`) |
+| Sensor log playback | Fabric Wetness card | `sensor-trace.js` sweeps a cursor along the real readings and updates the readout; hover scrubs |
+| Live spam filter | Spam Ham card | `inbox-demo.js` drops in a message every 2.8s; a scan sweep (`inbox-scan`), then the verdict pops in (`verdict-pop`) |
+| Rent skyline | Dhaka House Rent card | Towers rise as the card scrolls in (`tower-rise`); lit windows `twinkle` |
 | Floating clay orb | Contact panel | `float` keyframes |
 | Nav links press into the bar | Sticky nav | Light press on hover, pressed in for the current section (scroll-spy sets `aria-current`), deepest while clicking |
 | Hover micro-interactions | Cards, buttons, nav, marquee items, icon boxes | CSS transitions |
@@ -45,6 +58,7 @@ no frameworks, no build step, no dependencies.
 │   │   ├── base.css            # Fluid root size, reset, page shell, typography, layout, a11y, icons
 │   │   ├── components.css      # Reusable pieces: panel, button, chip, icon box, orb, neural core, marquee, step
 │   │   ├── sections.css        # Page-specific layout, in document order (header → footer)
+│   │   ├── project-visuals.css # The data-driven scenes in the project cards (lungs, sensor trace, inbox, skyline)
 │   │   └── motion.css          # Entrance animations, keyframes, pause state, reduced motion
 │   ├── js/
 │   │   ├── boot.js             # Runs in <head>: restores the saved theme / motion choice before first paint
@@ -56,27 +70,34 @@ no frameworks, no build step, no dependencies.
 │   │       ├── counters.js     # Count-up numbers
 │   │       ├── scroll-reveal.js  # Fallback reveal for browsers without scroll timelines
 │   │       ├── sticky-nav.js   # Pins the nav to the top once the header scrolls away
-│   │       └── scroll-spy.js   # Marks the nav link of the section in view
+│   │       ├── scroll-spy.js   # Marks the nav link of the section in view
+│   │       ├── ambient.js      # Frame loop for the JS demos: on screen only, obeys pause and reduced motion
+│   │       ├── sensor-trace.js # Fabric card: draws the sensor log and plays it back
+│   │       └── inbox-demo.js   # Spam card: moves messages through the inbox
 │   └── images/
-│       └── favicon.svg
+│       ├── favicon.svg
+│       └── portrait.jpg
 ├── .editorconfig
 └── .gitignore
 ```
 
 ### Conventions
 
-- **CSS load order matters:** `tokens → base → components → sections → motion`. Later files may
-  override earlier ones at equal specificity.
+- **CSS load order matters:** `tokens → base → components → sections → project-visuals → motion`.
+  Later files may override earlier ones at equal specificity.
 - **Class names:** reusable components keep short names (`.panel`, `.btn`, `.chip`). Section-level
   layout uses BEM-style names (`.hero__content`, `.role--featured`, `.contact-card__label`).
-- **No inline styles.** Every visual value comes from a token in `tokens.css` or a class.
+- **No inline styles.** Every visual value comes from a token in `tokens.css` or a class. The one
+  exception is chart data in the project visuals, passed as custom properties (`style="--rent: 30"`),
+  so the numbers live in the markup and the look lives in the CSS.
 - **Sizes are in `rem`** (1rem = 16px at the design width), never `px`, so everything scales together.
   Only media queries use `px`, because they describe the viewport.
 - **Scripts are plain, deferred files**, not ES modules, so the site also works when opened from disk.
   Each file in `js/modules/` registers itself on one global namespace (`window.Portfolio.*`), and
   `main.js`, loaded last, calls them. Keep the `<script defer>` order in `index.html`.
 - **State lives on `<html>`** as `data-theme="light|dark"` and `data-motion="playing|paused"`, and CSS
-  reacts to it. JavaScript only flips those attributes.
+  reacts to it. JavaScript only flips those attributes. JS-driven animations run through
+  `Portfolio.ambient.run()`, which follows the same pause and reduced-motion rules as the CSS ones.
 - **JS hooks use `data-*` attributes** (`data-theme-toggle`, `data-marquee`, `data-count-to`), not
   styling classes.
 - **Icons are defined once** in the inline SVG sprite at the top of `<body>`, and used with
@@ -103,24 +124,33 @@ All copy lives in `index.html`. Several items are still placeholders:
 | What | Where in `index.html` |
 | --- | --- |
 | Thesis image (about 800 × 600) | `.thesis__media` |
-| Project images | `.project__media` (×4) |
 | Resume link | Both "Get my resume" buttons (`href="#"`) |
 
-The portrait (`assets/images/portrait.jpg`) and the LinkedIn and GitHub buttons (`.contact__social`) are already real.
+The portrait (`assets/images/portrait.jpg`), the project visuals and the LinkedIn, GitHub and
+"View code" links are already real.
 
 **To use a real image,** put the file in `assets/images/`. Then replace the placeholder `<div class="… ph-img">`
 with an `<img>` that keeps the layout class and adds `media-cover`:
 
 ```html
 <!-- before -->
-<div class="bento__photo ph-img">…</div>
+<div class="thesis__media ph-img">…</div>
 
 <!-- after -->
-<img class="bento__photo media-cover" src="assets/images/portrait.jpg"
-     alt="Portrait of Syeda Mahjabin Proma" width="800" height="1000">
+<img class="thesis__media media-cover" src="assets/images/thesis.jpg"
+     alt="What the image shows" width="800" height="600">
 ```
 
-The same pattern works for `thesis__media` and `project__media`.
+**Project visuals.** Every number in the project cards comes from the project's repository:
+
+| Card | Source in the repository | In `index.html` |
+| --- | --- | --- |
+| Lung Cancer | `lung_cancer_dataset.csv`: cancer rate under / from 20 pack-years, and with / without each risk factor | Lobe fill levels (`translate(0 …)`), `.lungs__rate`, `.factor` (`--without`, `--with`) |
+| Fabric Wetness | `humidity_temp_dataset.csv`: every reading, in logged order | `data-readings` on `[data-sensor-trace]` (`humidity,temperature,d\|w` per reading) |
+| Spam Ham | `email_classification_dataset.csv`: real senders and subject lines | The `.inbox__msg` items (`data-verdict="spam\|ham"`) |
+| Dhaka House Rent | `houserentdhaka.csv`: median rent per area, in ৳ thousand | `.tower` items (`--rent`) |
+
+The model scores (`.project__result`) come from each repository's notebook and README.
 
 **To change colours or spacing,** edit the tokens in `assets/css/tokens.css`. The dark theme overrides
 are in the `:root[data-theme="dark"]` block.
@@ -139,10 +169,10 @@ change `1440`; to change how far it goes, change `200%`.
 
 ## Browser support
 
-The site works in current Chrome, Edge, Safari and Firefox. It uses `color-mix()`, the individual
-`translate` property and `overflow: clip`. Scroll-driven reveals run natively where
+The site works in current Chrome, Edge, Safari and Firefox. It uses `color-mix()`, container queries,
+the individual `translate` property and `overflow: clip`. Scroll-driven reveals run natively where
 `animation-timeline: view()` is supported. Other browsers get the same fade-up through the
-IntersectionObserver fallback.
+IntersectionObserver fallback, and the project visuals simply appear in their final state.
 
 ## Deployment
 

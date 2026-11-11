@@ -13,11 +13,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap">
 
-  <!-- Styles (order matters: tokens → base → components → sections → motion) -->
+  <!-- Styles (order matters: tokens → base → components → sections → project visuals → motion) -->
   <link rel="stylesheet" href="assets/css/tokens.css">
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/css/sections.css">
+  <link rel="stylesheet" href="assets/css/project-visuals.css">
   <link rel="stylesheet" href="assets/css/motion.css">
 
   <!-- Scripts: boot.js runs immediately (no theme flash); the deferred ones
@@ -31,6 +32,9 @@
   <script defer src="assets/js/modules/scroll-reveal.js"></script>
   <script defer src="assets/js/modules/sticky-nav.js"></script>
   <script defer src="assets/js/modules/scroll-spy.js"></script>
+  <script defer src="assets/js/modules/ambient.js"></script>
+  <script defer src="assets/js/modules/sensor-trace.js"></script>
+  <script defer src="assets/js/modules/inbox-demo.js"></script>
   <script defer src="assets/js/main.js"></script>
 </head>
 <body>
@@ -363,12 +367,69 @@
           </ol>
         </div>
 
-        <!-- Project cards -->
+        <!-- Project cards. Each visual is drawn from that project's own repository
+             (dataset or notebook); see css/project-visuals.css. -->
         <div class="projects">
           <article class="project panel lift sr">
-            <div class="project__media ph-img">
-              <svg class="icon icon--2xl" aria-hidden="true"><use href="#icon-image"/></svg>
-              Project image
+            <!-- From lung_cancer_dataset.csv (50,000 patients) -->
+            <div class="project__media viz" role="img" aria-label="Infographic from the project's 50,000-patient dataset. 41% of patients who had smoked under 20 pack-years had lung cancer, against 76% of those with 20 or more. Asbestos exposure, COPD, high radon exposure and being 50 or older each raise the rate by about 14 points.">
+              <p class="viz__caption eyebrow quiet">Cancer rate · 50k patients</p>
+              <div class="viz__body lungs">
+                <div class="lungs__figure">
+                  <svg class="lungs__art" viewBox="0 0 200 132">
+                    <defs>
+                      <path id="lung-lobe-l" d="M74 12C58 16 34 40 22 74C14 96 10 114 12 126C28 120 58 118 88 125C92 112 92 98 89 86C86 78 92 70 92 58L91 40C90 24 86 10 74 12Z"/>
+                      <path id="lung-lobe-r" d="M126 12C142 16 166 40 178 74C186 96 190 114 188 126C172 120 142 118 112 125C108 112 108 98 111 86C114 78 108 70 108 58L109 40C110 24 114 10 126 12Z"/>
+                      <clipPath id="lung-clip-l"><use href="#lung-lobe-l"/></clipPath>
+                      <clipPath id="lung-clip-r"><use href="#lung-lobe-r"/></clipPath>
+                      <!-- Clay body and gloss: the same lighting as the orbs and network nodes -->
+                      <radialGradient id="lung-clay" cx=".32" cy=".26" r=".9">
+                        <stop class="lungs__clay-hi" offset="0"/>
+                        <stop class="lungs__clay-mid" offset=".55"/>
+                        <stop class="lungs__clay-lo" offset="1"/>
+                      </radialGradient>
+                      <radialGradient id="lung-gloss" cx=".3" cy=".18" r=".95">
+                        <stop class="lungs__gloss-light" offset="0"/>
+                        <stop class="lungs__gloss-clear" offset=".45"/>
+                        <stop class="lungs__gloss-shade" offset="1"/>
+                      </radialGradient>
+                    </defs>
+                    <g class="lungs__organ">
+                      <path class="lungs__airway" d="M100 4V44M100 44Q100 56 86 62M100 44Q100 56 114 62"/>
+                      <use class="lungs__lobe" href="#lung-lobe-l"/>
+                      <use class="lungs__lobe" href="#lung-lobe-r"/>
+                      <!-- Liquid level = cancer rate, as a share of the lobe's height (y 11.8 → 126) -->
+                      <g clip-path="url(#lung-clip-l)">
+                        <g transform="translate(0 79.1)">
+                          <g class="lungs__rise"><path class="lungs__liquid" d="M-40 0q10-3 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0V120H-40Z"/></g>
+                        </g>
+                      </g>
+                      <g clip-path="url(#lung-clip-r)">
+                        <g transform="translate(0 39.6)">
+                          <g class="lungs__rise"><path class="lungs__liquid lungs__liquid--offset" d="M-40 0q10-3 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0V120H-40Z"/></g>
+                        </g>
+                      </g>
+                      <use class="lungs__gloss" href="#lung-lobe-l"/>
+                      <use class="lungs__gloss" href="#lung-lobe-r"/>
+                    </g>
+                    <text class="lungs__rate" x="52" y="108">41%</text>
+                    <text class="lungs__rate" x="148" y="108">76%</text>
+                  </svg>
+                  <p class="lungs__legend">
+                    <span><strong>Under 20</strong> pack-years</span>
+                    <span><strong>20 or more</strong> pack-years</span>
+                  </p>
+                </div>
+                <div class="lungs__factors">
+                  <p class="factors__key"><span class="factors__key-dot"></span>without <span class="factors__key-dot factors__key-dot--with"></span>with</p>
+                  <ul class="factors">
+                    <li class="factor" style="--without: 61.5; --with: 76.1"><span class="factor__name">Asbestos</span><span class="factor__track"></span><span class="factor__value">62 → 76%</span></li>
+                    <li class="factor" style="--without: 61.6; --with: 75.8"><span class="factor__name">COPD</span><span class="factor__track"></span><span class="factor__value">62 → 76%</span></li>
+                    <li class="factor" style="--without: 64.3; --with: 77.7"><span class="factor__name">High radon</span><span class="factor__track"></span><span class="factor__value">64 → 78%</span></li>
+                    <li class="factor" style="--without: 60.4; --with: 74.1"><span class="factor__name">Age 50+</span><span class="factor__track"></span><span class="factor__value">60 → 74%</span></li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="project__body">
               <span class="eyebrow quiet">01 · Healthcare ML</span>
@@ -379,13 +440,33 @@
                 <li class="chip">MLP</li>
                 <li class="chip">1D CNN</li>
               </ul>
+              <div class="project__foot">
+                <p class="project__result">MLP · <strong>73.2%</strong> accuracy</p>
+                <a class="btn btn-secondary btn-sm" href="https://github.com/Syeda-Mahjabin-Proma/Lung_Cancer_Prediction_System" target="_blank" rel="noopener noreferrer" aria-label="View code: Lung Cancer Prediction System on GitHub (opens in a new tab)">
+                  <svg class="icon" aria-hidden="true"><use href="#icon-code"/></svg>
+                  View code
+                </a>
+              </div>
             </div>
           </article>
 
           <article class="project panel lift sr">
-            <div class="project__media ph-img">
-              <svg class="icon icon--2xl" aria-hidden="true"><use href="#icon-image"/></svg>
-              Project image
+            <!-- From humidity_temp_dataset.csv: every reading the Arduino Uno + DHT22 rig logged, in order -->
+            <div class="project__media viz" role="img" aria-label="Line chart of the 182 readings logged by the project's Arduino and DHT22 sensor rig. Wet fabric read 73 to 90% humidity and dry fabric 63 to 77%; wet fabric was also about 1.3 °C cooler.">
+              <p class="viz__caption eyebrow quiet">DHT22 sensor log</p>
+              <div class="viz__body trace" data-sensor-trace data-start="139" data-readings="73.5,31,d 80.9,30.8,w 81.9,30.7,w 80.1,30.6,w 76.4,30.6,d 73.9,30.8,d 73.6,30.9,d 73.6,30.9,d 73.1,31.1,w 81.2,31.2,w 83,31.2,w 83.6,31.2,w 82.3,31.2,w 79.8,30.9,w 80.2,30.9,w 73.9,30.8,d 73.6,30.9,d 73.4,30.9,d 73.3,31,d 73.1,31.1,d 73.6,30.9,d 73.3,31,d 73.2,31,d 73.1,31,d 72.9,31.1,d 72.8,31.1,d 72.7,31.1,d 77.8,31.1,w 81.1,30.9,w 81.4,30.7,w 80.8,30.4,w 81.4,30,w 81.9,29.9,w 82.8,29.6,w 83.3,29.4,w 83.9,29.2,w 84.1,29.1,w 84.4,29,w 85.2,28.9,w 85.5,28.8,w 84.7,28.8,w 86.4,28.9,w 76.8,30.6,d 75.8,30.8,d 75.6,30.8,d 75.5,30.9,d 75.3,31,d 73.5,31.1,d 74.1,31.3,d 75.3,31.5,d 73.6,31.7,d 72.3,31.8,d 71.5,31.9,d 71,31.8,d 70.6,31.9,d 70.4,31.9,d 70.3,31.9,d 70.2,31.8,d 70.3,31.8,d 70.4,31.8,d 72,31.5,d 72.1,31.4,d 71.9,31.4,d 73.1,31.5,d 73.5,31.6,d 72.8,31.6,d 71.6,31.6,d 71.4,31.6,d 71.6,31.5,d 73.4,31.5,d 73.5,31.5,d 73.7,31.6,d 73.1,31.7,d 73,31.7,d 72.9,31.8,d 72.3,31.7,d 63.1,30.1,d 64.1,30.1,d 64.4,30.2,d 63.9,30.2,d 64.1,30.2,d 64.2,30.2,d 63.9,30.3,d 63.5,30.3,d 63.3,30.2,d 63,30.4,d 81.2,29.4,w 79.9,29,w 79.5,28.6,w 79.9,28.3,w 80.3,28.1,w 80.2,27.9,w 79.9,27.8,w 83.2,27.8,w 84.4,27.7,w 85.1,27.6,w 84.9,27.6,w 84.8,27.6,w 84.5,27.6,w 67.7,30.3,d 67.5,30.4,d 67.3,30.4,d 67.6,30.5,d 67.6,30.6,d 67.5,30.6,d 67.7,30.6,d 67.5,30.6,d 67.5,30.7,d 69.6,30.8,d 71.6,30.9,d 71.2,30.8,d 77,30.5,w 84.1,30.4,w 83.9,30.2,w 82.7,30.2,w 84.7,30.2,w 83.3,30.1,w 84.2,30.1,w 86.1,30,w 86.6,30,w 87.3,30,w 83.6,29.9,w 82.1,29.8,w 81.4,29.7,w 68.7,30.2,d 69,30.3,d 70.5,30.4,d 70.6,30.5,d 72.6,30.7,d 73,30.8,d 72.9,31,d 72.7,31.2,d 79.8,30.6,w 86.6,30.6,w 87.9,30.6,w 89.1,30.6,w 89.5,30.5,w 89.2,30.5,w 89.7,30.4,w 90,30.4,w 88.4,30.3,w 80.8,30.2,w 81.3,30.1,w 84.4,30.1,w 79,30,w 82.4,29.8,w 81,29.8,w 81.6,29.7,w 79.9,29.7,w 81,29.6,w 69.1,30.2,d 69,30.3,d 68.6,30.3,d 68.4,30.4,d 68.2,30.4,d 68,30.5,d 67.9,30.5,d 67.7,30.6,d 67.7,30.6,d 71.1,30.8,d 74.5,30.9,d 75.7,31,d 73,31.2,d 72.7,31.3,d 72.1,31.3,d 75.8,30.5,w 76.1,30.3,w 76.4,30.1,w 77.7,30,w 78.9,29.8,w 79.8,29.5,w 80.7,29.4,w 81.1,29.2,w 81.1,29.1,w 77.1,29.1,w 81.6,29.1,w 82.8,29.1,w 83.7,29.1,w 85,29.1,w 85.4,29.1,w 85.3,29.2,w 85.5,29.1,w">
+                <div class="trace__screen">
+                  <svg class="trace__plot"></svg>
+                  <span class="trace__cursor"></span>
+                  <span class="trace__dot"></span>
+                </div>
+                <p class="trace__readout">
+                  <span data-trace-index>#140</span> ·
+                  <span><strong data-trace-humidity>90.0%</strong> humidity</span> ·
+                  <span data-trace-temperature>30.4 °C</span>
+                  <span class="trace__state" data-trace-state>Wet</span>
+                </p>
+              </div>
             </div>
             <div class="project__body">
               <span class="eyebrow quiet">02 · Classification</span>
@@ -395,13 +476,72 @@
                 <li class="chip">Logistic Regression</li>
                 <li class="chip">Random Forest</li>
               </ul>
+              <div class="project__foot">
+                <p class="project__result">Random Forest · <strong>100%</strong> test accuracy</p>
+                <a class="btn btn-secondary btn-sm" href="https://github.com/Syeda-Mahjabin-Proma/Fabric-Wetness-Detection-Model-Using-ML" target="_blank" rel="noopener noreferrer" aria-label="View code: Fabric Wetness Detection Model on GitHub (opens in a new tab)">
+                  <svg class="icon" aria-hidden="true"><use href="#icon-code"/></svg>
+                  View code
+                </a>
+              </div>
             </div>
           </article>
 
           <article class="project panel lift sr">
-            <div class="project__media ph-img">
-              <svg class="icon icon--2xl" aria-hidden="true"><use href="#icon-image"/></svg>
-              Project image
+            <!-- Messages from email_classification_dataset.csv (10,000 emails) -->
+            <div class="project__media viz" role="img" aria-label="Animated inbox sorting emails from the project's 10,000-email dataset: subjects such as “Congratulations! You've Won a Free iPhone!” are flagged as spam, while “Team Stand-up at 10 AM” is marked ham.">
+              <p class="viz__caption eyebrow quiet">Spam filter at work</p>
+              <ol class="viz__body inbox" data-inbox-demo>
+                <li class="inbox__msg" data-verdict="ham" data-row="0">
+                  <span class="inbox__avatar">T</span>
+                  <span class="inbox__text"><span class="inbox__from">team@projectmanagement.com</span><span class="inbox__subject">Team Stand-up at 10 AM</span></span>
+                  <span class="inbox__tag">Ham</span>
+                </li>
+                <li class="inbox__msg" data-verdict="spam" data-row="1">
+                  <span class="inbox__avatar">N</span>
+                  <span class="inbox__text"><span class="inbox__from">noreply@winner-prize.net</span><span class="inbox__subject">Congratulations! You've Won a Free iPhone!</span></span>
+                  <span class="inbox__tag">Spam</span>
+                </li>
+                <li class="inbox__msg" data-verdict="ham" data-row="2">
+                  <span class="inbox__avatar">S</span>
+                  <span class="inbox__text"><span class="inbox__from">support@legitcompany.com</span><span class="inbox__subject">Your Order #6789 Confirmed</span></span>
+                  <span class="inbox__tag">Ham</span>
+                </li>
+                <li class="inbox__msg" data-verdict="spam">
+                  <span class="inbox__avatar">S</span>
+                  <span class="inbox__text"><span class="inbox__from">security@alert-system.ru</span><span class="inbox__subject">URGENT: Your Account Has Been Compromised!</span></span>
+                  <span class="inbox__tag">Spam</span>
+                </li>
+                <li class="inbox__msg" data-verdict="ham">
+                  <span class="inbox__avatar">F</span>
+                  <span class="inbox__text"><span class="inbox__from">family@homemail.net</span><span class="inbox__subject">Photos from the Weekend Trip</span></span>
+                  <span class="inbox__tag">Ham</span>
+                </li>
+                <li class="inbox__msg" data-verdict="ham">
+                  <span class="inbox__avatar">A</span>
+                  <span class="inbox__text"><span class="inbox__from">accounts@billingcorp.com</span><span class="inbox__subject">Invoice for Services Rendered</span></span>
+                  <span class="inbox__tag">Ham</span>
+                </li>
+                <li class="inbox__msg" data-verdict="spam">
+                  <span class="inbox__avatar">I</span>
+                  <span class="inbox__text"><span class="inbox__from">info@unclaimed-funds.co</span><span class="inbox__subject">Unclaimed Funds Await You</span></span>
+                  <span class="inbox__tag">Spam</span>
+                </li>
+                <li class="inbox__msg" data-verdict="ham">
+                  <span class="inbox__avatar">J</span>
+                  <span class="inbox__text"><span class="inbox__from">john.doe@example.com</span><span class="inbox__subject">Meeting Reminder: Project Alpha</span></span>
+                  <span class="inbox__tag">Ham</span>
+                </li>
+                <li class="inbox__msg" data-verdict="spam">
+                  <span class="inbox__avatar">I</span>
+                  <span class="inbox__text"><span class="inbox__from">invest@global-finance.biz</span><span class="inbox__subject">Exclusive Investment Opportunity - High Returns!</span></span>
+                  <span class="inbox__tag">Spam</span>
+                </li>
+                <li class="inbox__msg" data-verdict="ham">
+                  <span class="inbox__avatar">F</span>
+                  <span class="inbox__text"><span class="inbox__from">friend@personalmail.net</span><span class="inbox__subject">Catching Up - How are you?</span></span>
+                  <span class="inbox__tag">Ham</span>
+                </li>
+              </ol>
             </div>
             <div class="project__body">
               <span class="eyebrow quiet">03 · Natural language</span>
@@ -413,13 +553,28 @@
                 <li class="chip">Random Forest</li>
                 <li class="chip">TF-IDF</li>
               </ul>
+              <div class="project__foot">
+                <p class="project__result">Naive Bayes · <strong>100%</strong> on 3,000 test emails</p>
+                <a class="btn btn-secondary btn-sm" href="https://github.com/Syeda-Mahjabin-Proma/Spam_Ham_Classifier" target="_blank" rel="noopener noreferrer" aria-label="View code: Spam Ham Classifier Model on GitHub (opens in a new tab)">
+                  <svg class="icon" aria-hidden="true"><use href="#icon-code"/></svg>
+                  View code
+                </a>
+              </div>
             </div>
           </article>
 
           <article class="project panel lift sr">
-            <div class="project__media ph-img">
-              <svg class="icon icon--2xl" aria-hidden="true"><use href="#icon-image"/></svg>
-              Project image
+            <!-- From houserentdhaka.csv (28,800 listings): median rent per area, ৳ thousand -->
+            <div class="project__media viz" role="img" aria-label="Bar chart of median monthly rent by area, from the project's 28,800 Dhaka listings: Baridhara ৳110k, Gulshan ৳100k, Dhanmondi ৳30k, Bashundhara ৳27k, Uttara ৳20k and Mirpur ৳14k.">
+              <p class="viz__caption eyebrow quiet">Median monthly rent</p>
+              <ol class="viz__body skyline">
+                <li class="tower tower--prime tower--wide" style="--rent: 110"><span class="tower__rent">৳110k</span><span class="tower__block"></span><span class="tower__area">Baridhara</span></li>
+                <li class="tower tower--prime" style="--rent: 100"><span class="tower__rent">৳100k</span><span class="tower__block"></span><span class="tower__area">Gulshan</span></li>
+                <li class="tower" style="--rent: 30"><span class="tower__rent">৳30k</span><span class="tower__block"></span><span class="tower__area">Dhanmondi</span></li>
+                <li class="tower tower--wide" style="--rent: 27"><span class="tower__rent">৳27k</span><span class="tower__block"></span><span class="tower__area">Bashundhara</span></li>
+                <li class="tower" style="--rent: 20"><span class="tower__rent">৳20k</span><span class="tower__block"></span><span class="tower__area">Uttara</span></li>
+                <li class="tower" style="--rent: 14"><span class="tower__rent">৳14k</span><span class="tower__block"></span><span class="tower__area">Mirpur</span></li>
+              </ol>
             </div>
             <div class="project__body">
               <span class="eyebrow quiet">04 · Regression</span>
@@ -430,6 +585,13 @@
                 <li class="chip">Linear Regression</li>
                 <li class="chip">XGBoost</li>
               </ul>
+              <div class="project__foot">
+                <p class="project__result">Random Forest · <strong>R² 0.79</strong></p>
+                <a class="btn btn-secondary btn-sm" href="https://github.com/Syeda-Mahjabin-Proma/Dhaka_House_Rent_Prediction" target="_blank" rel="noopener noreferrer" aria-label="View code: Dhaka House Rent Prediction Model on GitHub (opens in a new tab)">
+                  <svg class="icon" aria-hidden="true"><use href="#icon-code"/></svg>
+                  View code
+                </a>
+              </div>
             </div>
           </article>
         </div>

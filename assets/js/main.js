@@ -13,4 +13,6 @@
   Portfolio.scrollReveal.init(document.querySelectorAll('.sr'));
   Portfolio.stickyNav.init(document.querySelector('[data-sticky-nav]'));
   Portfolio.scrollSpy.init(document.querySelectorAll('.site-nav a[href^="#"]'));
+  Portfolio.sensorTrace.init(document.querySelector('[data-sensor-trace]'));
+  Portfolio.inboxDemo.init(document.querySelector('[data-inbox-demo]'));
 })(window.Portfolio);

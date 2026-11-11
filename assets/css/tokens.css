@@ -74,6 +74,11 @@
   --border-soft: color-mix(in oklab, var(--surface-warm), var(--fg) 8%);
   --success: #4D8F5A;
 
+  /* Data-visual accents (css/project-visuals.css) */
+  --viz-wet: #3A6F88;                       /* dusty blue: water, wet fabric */
+  --viz-wet-area: rgba(120, 175, 205, .42); /* the same water, as a soft fill */
+  --viz-alert: #B4483A;                     /* brick: spam */
+
   /* Clay lighting: drop shadow (d) and highlight (l), outer and inner */
   --sh-d: rgba(150, 100, 60, .22);
   --sh-l: rgba(255, 255, 255, .9);
@@ -116,6 +121,10 @@
   --border: rgba(255, 240, 215, .12);
   --border-soft: rgba(255, 240, 215, .07);
   --success: #7DBF8A;
+
+  --viz-wet: #8CBCD0;
+  --viz-wet-area: rgba(140, 188, 208, .26);
+  --viz-alert: #E6907B;
 
   --sh-d: rgba(0, 0, 0, .46);
   --sh-l: rgba(255, 240, 215, .04);
